@@ -1,0 +1,34 @@
+.sidenave {
+    position: fixed;
+    top: 55px;
+    left: 0;
+    bottom: 0;
+    background: #111;
+    z-index: 11;
+    width: 250px;
+    margin-left: -250px;
+    transition: margin-left 0.2s;
+}
+
+.active {
+    margin-left: 0;
+}
+.site-overlay {
+    position: absolute;
+    top: 58px;
+    background: rgba(0,0,0, .5);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.sidenav-header {
+    color: #ddd;
+    text-align: left;
+    padding: 14px;
+    text-transform: capitalize;
+    /* border-bottom: 1px solid #ccc; */
+    font-size: 20px;
+}
