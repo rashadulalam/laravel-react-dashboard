@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//Log in system
+Route::get('/onLogin/{username}/{password}', 'App\Http\Controllers\AdminLoginController@onLogin');
+// logout
+Route::get('/logout', 'App\Http\Controllers\AdminLoginController@onLogout');
+// login page
+Route::get('/login', 'App\Http\Controllers\AdminLoginController@loginPage');
+
 
 
 // Contact route
@@ -35,11 +42,7 @@ Route::get('/reviews', 'App\Http\Controllers\ClientReviewController@index')->mid
 
 
 
-
-
-
-
-
+//react scafolding
 Route::get('/', function () {
     return view('index');
 })->middleware('loginCheck');
@@ -51,8 +54,4 @@ Route::get('{anyroute}', function () {
 
 
 
-Route::get('/onLogin/{username}/{password}', 'App\Http\Controllers\AdminLoginController@onLogin');
-// logout
-Route::get('/logout', 'App\Http\Controllers\AdminLoginController@onLogout');
-// login page
-Route::get('/login', 'App\Http\Controllers\AdminLoginController@loginPage');
+
