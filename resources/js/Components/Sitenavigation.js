@@ -30,12 +30,13 @@ class Sitenavigation extends Component {
         return (
 
             <>
+                <title>{this.props.title}</title>
                 <Navbar bg="light" expand="lg">
                     <Navbar.Brand href="#" onClick={this.sidenavToggle}><FaBars /></Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto">
-                            <Link to="/logout" className="nav-link text-danger">Logout</Link>
+                            <a href="/logout" className="nav-link text-danger">Logout</a>
                         </Nav>
 
                     </Navbar.Collapse>
@@ -46,7 +47,9 @@ class Sitenavigation extends Component {
                         <Link to="/" className="nav-link">Home</Link>
                         <Link to="/about-us" className="nav-link">About us</Link>
                         <Link to="/contact-with-us" className="nav-link">Contact us</Link>
-                        <Link to="/projects" className="nav-link">Our projects</Link>
+                        <Link to="/our-projects" className="nav-link">Our projects</Link>
+                        <Link to="/client-review" className="nav-link">Client Review</Link>
+                        <Link to="/our-services" className="nav-link">Our Services</Link>
                     </div>
                 </div>
                 <div className={this.state.overlay} onClick={this.sidenavToggle}></div>

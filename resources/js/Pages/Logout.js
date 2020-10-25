@@ -7,7 +7,7 @@ class Logout extends Component {
     render() {
         return (
             <>
-                <Sitenavigation>
+                <Sitenavigation title="Logout">
                     <Jumbotron>
                         <Container fluid>
                             <Row>

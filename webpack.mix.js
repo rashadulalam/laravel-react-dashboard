@@ -12,6 +12,4 @@ const mix = require('laravel-mix');
  */
 
 mix.react('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ]).browserSync('http://127.0.0.1:8000');
+    .sass('resources/sass/app.scss', 'public/css').browserSync('http://127.0.0.1:8000');

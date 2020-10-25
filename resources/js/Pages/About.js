@@ -7,7 +7,7 @@ class About extends Component {
     render() {
         return (
             <>
-               <Sitenavigation>
+               <Sitenavigation title="About us">
                    <Jumbotron>
                        <Container fluid>
                            <Row>
