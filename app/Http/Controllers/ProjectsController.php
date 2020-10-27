@@ -22,9 +22,24 @@ class ProjectsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $title = $request->input('title');
+        $description = $request->input('description');
+        $photoPath = $request->file('photo')->store('public');
+        $photoName = explode('/', $photoPath)[1];
+
+
+
+        $photoUrl = 'http://' . $_SERVER['HTTP_HOST'] . "/storage/". $photoName;
+
+        $result = Projects::insert([
+            'name' => $title,
+            'details' => $description,
+            'image' => $photoUrl,
+            ]);
+
+        return $result;
     }
 
     /**
@@ -82,4 +97,6 @@ class ProjectsController extends Controller
     {
         return Projects::where('id', $request->input('id'))->delete();
     }
+
+
 }

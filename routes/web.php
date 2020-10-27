@@ -12,45 +12,49 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Log in system
-Route::get('/onLogin/{username}/{password}', 'App\Http\Controllers\AdminLoginController@onLogin');
-// logout
-Route::get('/logout', 'App\Http\Controllers\AdminLoginController@onLogout');
-// login page
-Route::get('/login', 'App\Http\Controllers\AdminLoginController@loginPage');
+
 
 
 
 // Contact route
-Route::get('/contact', 'App\Http\Controllers\ContactController@index')->middleware('loginCheck');
-Route::post('/contact-delete', 'App\Http\Controllers\ContactController@destroy')->middleware('loginCheck');
+Route::get('/contact', 'App\Http\Controllers\ContactController@index');
+Route::post('/contact-delete', 'App\Http\Controllers\ContactController@destroy');
 
 // projects route
-Route::get('/projects', 'App\Http\Controllers\ProjectsController@index')->middleware('loginCheck');
-Route::post('/projects-delete', 'App\Http\Controllers\ProjectsController@destroy')->middleware('loginCheck');
+Route::get('/projects', 'App\Http\Controllers\ProjectsController@index');
+Route::post('/projects-delete', 'App\Http\Controllers\ProjectsController@destroy');
+Route::post('/add-project', 'App\Http\Controllers\ProjectsController@create');
 
 
 // Services
-Route::get('/services', 'App\Http\Controllers\ServiceController@index')->middleware('loginCheck');
-Route::post('/services-delete', 'App\Http\Controllers\ServiceController@destroy')->middleware('loginCheck');
+Route::get('/services', 'App\Http\Controllers\ServiceController@index');
+Route::post('/services-delete', 'App\Http\Controllers\ServiceController@destroy');
 
 // summary
-Route::get('/summary', 'App\Http\Controllers\HomeController@summary')->middleware('loginCheck');
+Route::get('/summary', 'App\Http\Controllers\HomeController@summary');
 
 // Client Review
-Route::get('/reviews', 'App\Http\Controllers\ClientReviewController@index')->middleware('loginCheck');
+Route::get('/reviews', 'App\Http\Controllers\ClientReviewController@index');
+
+
+//Log in system
+Route::get('/login', 'App\Http\Controllers\AdminLoginController@loginPage');
+Route::get('/onLogin/{username}/{password}', 'App\Http\Controllers\AdminLoginController@onLogin');
+// logout
+Route::get('/logout', 'App\Http\Controllers\AdminLoginController@onLogout');
+// login page
+
 
 
 
 //react scafolding
 Route::get('/', function () {
     return view('index');
-})->middleware('loginCheck');
-
+});
 
 Route::get('{anyroute}', function () {
     return view('index');
-})->where('anyroute', '.*')->middleware('loginCheck');
+})->where('anyroute', '.*');
 
 
 

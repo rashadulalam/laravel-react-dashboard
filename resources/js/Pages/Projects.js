@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Col, Container, Jumbotron, Row} from "react-bootstrap";
+import {Button, Col, Container, Jumbotron, Modal, Row, Form} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import Sitenavigation from "../Components/Sitenavigation";
 import Axios from "axios";
@@ -19,9 +19,25 @@ class Projects extends Component {
             isLoading: true,
             isError: false,
             delRowId: '',
+            modalShow: false,
+            addTitle: '',
+            addDes: '',
+            addFile: '',
         }
         this.deleteRowData = this.deleteRowData.bind(this);
         this.imageColumn = this.imageColumn.bind(this);
+        this.modalHandleClose = this.modalHandleClose.bind(this);
+        this.modalHandleOpen = this.modalHandleOpen.bind(this);
+        this.titleOnChange = this.titleOnChange.bind(this);
+        this.descriptionOnChange = this.descriptionOnChange.bind(this);
+        this.fileOnChange = this.fileOnChange.bind(this);
+        this.formSubmitData = this.formSubmitData.bind(this);
+    }
+    modalHandleClose() {
+        this.setState({modalShow:false})
+    }
+    modalHandleOpen() {
+        this.setState({modalShow:true})
     }
 
     componentDidMount() {
@@ -61,6 +77,48 @@ class Projects extends Component {
             <img src={cell} className="w-50"/>
         );
     }
+
+
+    // form data pull
+    titleOnChange( event ) {
+        this.setState({addTitle: event.target.value});
+
+    }
+
+    descriptionOnChange( event ) {
+        this.setState({addDes: event.target.value});
+    }
+
+    fileOnChange( event ) {
+        this.setState({addFile:event.target.files[0]});
+    }
+
+    formSubmitData(){
+        // alert(this.state.addTitle + this.state.addDes + this.state.addFile);
+
+        let url = '/add-project';
+        let formData = new FormData();
+        formData.append('title', this.state.addTitle);
+        formData.append('description', this.state.addDes);
+        formData.append('photo', this.state.addFile);
+
+        let config = {
+            headers: {'content-type': 'multipart/form-data'}
+        }
+        Axios.post(url, formData, config)
+            .then((response => {
+                if(response.data == 1){
+
+                    this.modalHandleClose();
+                    this.componentDidMount();
+
+                }
+            }))
+            .catch(error => {
+                alert(error);
+            })
+    }
+
     render() {
 
         if(this.state.isLoading == true) {
@@ -91,7 +149,7 @@ class Projects extends Component {
                 },
                 {
                     dataField: 'image',
-                    text: 'Media',
+                    text: 'Image',
                     formatter: this.imageColumn
                 },
 
@@ -128,11 +186,45 @@ class Projects extends Component {
                             <Row>
                                 <Col md="12">
                                     <Button className="my-3 btn-danger" onClick={this.deleteRowData}>Delete</Button>
+                                    <Button varient="primary" className="my-3 ml-3" onClick={this.modalHandleOpen}>Add new</Button>
                                     <BootstrapTable keyField='id' data={contactList} columns={column} selectRow={selectRow}  pagination={ paginationFactory() } />
                                 </Col>
                             </Row>
                         </Container>
                     </Sitenavigation>
+
+                    <Modal show={this.state.modalShow} onHide={this.modalHandleClose} className="fade">
+                        <Modal.Header closeButton>
+                            <Modal.Title>Add new project</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form>
+
+                                <Form.Group controlId="formBasicEmail">
+                                    <Form.Label>Project name</Form.Label>
+                                    <Form.Control type="text" onChange={this.titleOnChange} placeholder="Project name" />
+                                </Form.Group>
+                                <Form.Group controlId="formBasicEmail">
+                                    <Form.Label>Project details</Form.Label>
+                                    <Form.Control as="textarea" onChange={this.descriptionOnChange} rows={3} />
+                                </Form.Group>
+                                <Form.Group controlId="formBasicEmail">
+                                    <Form.File id="exampleFormControlFile1" onChange={this.fileOnChange} label="Project image" />
+                                </Form.Group>
+                            </Form>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={this.modalHandleClose}>
+                                Close
+                            </Button>
+                            <Button variant="primary" onClick={this.formSubmitData}>
+                                Save Changes
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+
+
+
                 </>
             );
         }
